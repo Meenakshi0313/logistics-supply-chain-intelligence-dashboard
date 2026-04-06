@@ -17,33 +17,27 @@ This project delivers a 5-page interactive Power BI Intelligence Suite designed 
 
 ---
 
-### 🛠️ Data Architecture (Star Schema)
+### 🏗️ Architecture & Data Engineering
 
-The project is built on a robust Star Schema involving 11 optimized views, ensuring efficient filtering and high-performance calculations across large datasets.
+The project follows a Medallion Architecture (Bronze → Silver → Gold) to ensure data integrity and high-speed query performance:
 
-**Fact Tables** (Transactional Data)
+- **Bronze** (Raw): Ingestion of raw logistics and fleet telemetry CSV files into SQL Server.
 
-- v_FactTripLoads: The core transactional table containing revenue, distances, and freight details.
+- **Silver** (Cleansed): Data transformation layer where null downtime values were handled, date formats standardized, and truck/driver categories normalized.
 
-- v_FactMonthlyMetrics: Aggregated monthly snapshots for high-level executive trend analysis.
+- **Gold** (Business Layer): Created 11 optimized SQL Views to serve as a high-performance "Gold Layer" source for Power BI, significantly reducing report-level processing time and DAX complexity.
 
-- v_FactSupplyChainEvents: Tracks lifecycle events of shipments, from dispatch to delivery.
+---
 
-- v_FactIncidentMaintenance: Records all safety incidents, maintenance costs, and asset downtime.
+### ⭐ Data Modeling (Star Schema)
 
-**Dimension Tables** (Lookup Data)
+The heart of this project is a high-performance Star Schema designed for scalability and analytical depth:
 
-- v_DimDate: A comprehensive calendar table supporting all Time Intelligence (YoY, Month-on-Month) measures.
+- **Fact Tables**: v_FactTripLoads, v_FactIncidentMaintenance, v_FactSupplyChainEvents, and v_FactMonthlyMetrics.
 
-- v_DimTrucks & v_DimTrailers: Detailed asset attributes (Brand, Model Year, Type) for fleet health tracking.
+- **Dimension Tables**: v_DimTrucks, v_DimDrivers, v_DimFacilities, v_DimRoutes, v_DimTrailers, v_DimCustomers, and a custom v_DimDate.
 
-- v_DimDrivers: Personal and performance profiles for labor efficiency analysis.
-
-- v_DimCustomers: Geographic and segment data for client-side profitability analysis.
-
-- v_DimFacilities: Warehouse and hub location details.
-
-- v_Routes: Defined logistics corridors used to calculate the Route Profitability Index (RPI).
+- **Key Logic**: Implemented 1-to-Many relationships across 11 optimized views to ensure 100% filter integrity across all 5 dashboard pages.
 
   <details>
   <summary> Data Model </summary>
