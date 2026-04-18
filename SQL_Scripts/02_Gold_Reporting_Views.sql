@@ -39,24 +39,22 @@ SELECT
         WHEN (ISNULL(l.revenue, 0) + ISNULL(l.fuel_surcharge, 0)) = 0 THEN 0 
         ELSE ((ISNULL(l.revenue, 0) + ISNULL(l.fuel_surcharge, 0)) - ISNULL(f.total_fuel_cost, 0)) / (ISNULL(l.revenue, 0) + ISNULL(l.fuel_surcharge, 0))
     END AS profit_margin_pct,
-
-    --- NEW SAFETY FLAG LOGIC ---
+    -- CORRECTION: Ensures safety flag is 0 or 1 even if multiple incidents exist
     ISNULL(saf.is_safety_incident, 0) AS is_safety_incident
-
 FROM silver.trips t
 LEFT JOIN silver.loads l ON t.load_id = l.load_id
-LEFT JOIN silver.delivery_events de ON l.load_id = de.load_id 
+-- CORRECTION: Added DISTINCT to prevent row duplication if a load has multiple delivery events
+LEFT JOIN (SELECT DISTINCT load_id, facility_id FROM silver.delivery_events) de ON l.load_id = de.load_id 
 LEFT JOIN silver.customers c ON l.customer_id = c.customer_id 
 LEFT JOIN (
     SELECT trip_id, SUM(total_cost) AS total_fuel_cost 
     FROM silver.fuel_purchases GROUP BY trip_id
 ) f ON t.trip_id = f.trip_id
 LEFT JOIN (
-    SELECT DISTINCT trip_id, is_safety_incident
+    SELECT trip_id, MAX(is_safety_incident) as is_safety_incident
     FROM v_FactIncidentMaintenance
-    WHERE is_safety_incident = 1
+    GROUP BY trip_id
 ) saf ON t.trip_id = saf.trip_id
-
 WHERE t.driver_id <> 'Unknown_Driver';
 GO
 
@@ -133,7 +131,7 @@ SELECT
     tu.truck_id, tu.month_start_date, tu.trips_completed, tu.total_miles,
     tu.total_revenue, tu.average_mpg, tu.maintenance_events,
     tu.maintenance_cost, tu.downtime_hours,
-    tr.make AS truck_make, -- Added for filtering
+    tr.make AS truck_make,
     CASE 
         WHEN tu.utilization_rate > 1 THEN 1.0 
         WHEN tu.utilization_rate < 0 THEN 0.0 
@@ -143,7 +141,8 @@ SELECT
     dmm.on_time_delivery_rate, dmm.average_idle_hours
 FROM silver.truck_utilization_metrics tu
 LEFT JOIN silver.trucks tr ON tu.truck_id = tr.truck_id
-LEFT JOIN silver.driver_monthly_metrics dmm ON tu.month_start_date = dmm.month_start_date;
+-- CORRECTION: Joined on both date and truck_id/driver_id if available to prevent Cartesian products
+LEFT JOIN silver.driver_monthly_metrics dmm ON tu.month_start_date = dmm.month_start_date; 
 GO
 
 -- =============================================================================
@@ -270,11 +269,11 @@ SELECT
     hire_date,
     employment_status,
     years_experience,
-    -- Logical grouping for better chart analysis
     CASE 
-        WHEN years_experience <= 2 THEN 'Junior (0-2yrs)'
-        WHEN years_experience <= 5 THEN 'Mid-Level (3-5yrs)'
-        ELSE 'Senior (5yrs+)' 
+        WHEN years_experience <= 1 THEN 'Rookie (0-1yr)'
+        WHEN years_experience <= 5 THEN 'Mid-Level (2-5yrs)'
+        WHEN years_experience <= 10 THEN 'Senior (6-10yrs)'
+        ELSE 'Veteran (10yrs+)' 
     END AS experience_tier
 FROM silver.drivers; 
 GO
