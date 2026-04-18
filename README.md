@@ -13,7 +13,7 @@ This project delivers a 5-page interactive Power BI Intelligence Suite designed 
   
 * 🛠️ [**Download Power BI Dashboard (.pbix)**](Report_and_Dashboard/Logistics_Intelligence_Command_Center_v1.pbix)
   
-* 💾 [**View SQL Gold-Layer Transformation Scripts**](SQL_Scripts/Gold/Logistic_Gold_Layer_Views)
+* 💾 [**View SQL Gold-Layer Transformation Scripts**](SQL_Scripts/Gold/Gold_Layer_Views.sql)
 
 ---
 

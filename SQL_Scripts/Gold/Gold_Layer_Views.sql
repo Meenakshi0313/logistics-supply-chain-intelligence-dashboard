@@ -159,7 +159,7 @@ CREATE VIEW v_DimTrucks AS
         truck_id,
         unit_number,
         make,
-        model_year,
+        COALESCE(CAST(model_year AS VARCHAR), 'Unknown') AS model_year,
         fuel_type
     FROM silver.trucks;
 GO
