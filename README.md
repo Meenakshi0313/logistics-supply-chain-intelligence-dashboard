@@ -1,6 +1,5 @@
 # 🚛 Fleet Performance & Supply Chain Intelligence Suite
 
-
 ## Executive Overview
 This **End-to-End Business Intelligence Suite** transforms raw transactional logistics data into actionable executive insights. Developed for a multi-regional freight operation, the dashboard provides a high-fidelity "Control Center" experience to monitor financial health, asset utilization, and safety compliance.
 
@@ -12,30 +11,25 @@ This **End-to-End Business Intelligence Suite** transforms raw transactional log
   
 * 🛠️ [**Download Power BI Dashboard (.pbix)**](Report_and_Dashboard/Logistics_Intelligence_Command_Center_v1.pbix)
   
-* 💾 [**View SQL Gold-Layer Transformation Scripts**](SQL_Scripts/Gold/Gold_Layer_Views.sql)
+* 💾 [**View SQL Gold-Layer Transformation Scripts**](SQL_Scripts/02_Gold_Reporting_Views.sql)
 
 ---
 
 ## 🛠️ Technical Architecture
 
 #### **Backend Architecture & Data Transformation**
-
-* **SQL Gold Layer:** Engineered a series of T-SQL views to denormalize a complex Snowflake schema into a high-performance reporting model, optimizing refresh efficiency.
-* **Data Integration:** Developed logic to merge disparate maintenance logs with trip-level financials to create a unified "Single Source of Truth."
-* **Star Schema Design:** Implemented a robust 1:Many relationship model (Fact-Dimension) to ensure data integrity and rapid filtering.
-
-  ---
+* **Medallion Pipeline:** Orchestrated a Bronze-to-Silver ETL process using Stored Procedures to clean, deduplicate (via `ROW_NUMBER`), and standardize raw telemetry data.
+* **SQL Gold Layer:** Engineered a series of T-SQL views to denormalize a complex Snowflake schema into a high-performance Star Schema, optimizing refresh efficiency.
+* **Data Integrity:** Implemented `ISNULL` and `COALESCE` logic within the SQL layer to ensure 100% metric accuracy across financial and safety reporting.
 
 #### **Analytical Modeling & Business Logic**
-
-* **KPI Intelligence:** Built a custom library of calculated measures to track multi-dimensional metrics across financial and operational domains.
-* **Trend & Variance Analysis:** Implemented time-intelligence logic to facilitate Year-over-Year (YoY) performance comparisons and anomaly detection.
-* **Exception Reporting:** Utilized advanced filtering and diverging visualization logic to identify cost leakage, loss-making lanes, and high-risk facilities.
+* **KPI Intelligence:** Built a custom library of calculated measures to track multi-dimensional metrics, including **Net Profit Margin** and **Asset Utilization Rates**.
+* **Categorical Engineering:** Developed custom logic for **Driver Experience Tiers** (Rookie to Veteran) and **Safety Incident Flags** to provide deeper HR and risk insights.
+* **Exception Reporting:** Utilized advanced filtering and diverging visualization logic to identify **High-Yield vs. High-Loss Lanes** and facilities with high detention risk.
 
 ---
 
 ## 📊 Dashboard Gallery
-
 *Click on any image to view it in high resolution.*
 
 ### **01. Landing & Navigation Hub**
@@ -52,7 +46,7 @@ This **End-to-End Business Intelligence Suite** transforms raw transactional log
 
 ### **04. Driver Performance & Safety**
 [<img src="04_Driver_Performance_and_Safety.png" width="1000" alt="Safety Analysis">](04_Driver_Performance_and_Safety.png)
-> **Insight:** Human-centric analytics focusing on safety compliance and revenue efficiency. Features a **Year-over-Year Safety Incident Distribution** chart.
+> **Insight:** Now featuring enhanced **Experience Tier** (Rookie to Veteran) breakdowns. Includes a **Year-over-Year Safety Incident Distribution** chart.
 
 ### **05. Logistic & Facility Analysis**
 [<img src="05_Logistic_and_Facility_Analysis.png" width="1000" alt="Facility Analysis">](05_Logistic_and_Facility_Analysis.png)
@@ -62,26 +56,20 @@ This **End-to-End Business Intelligence Suite** transforms raw transactional log
 
 ## 🏗️ Data Model (Star Schema)
 [<img src="Logistics_Star_Schema_Data_Model.png" width="1000" alt="Data Model">](Logistics_Star_Schema_Data_Model.png)
-*Architecture showing the relationship between Fact tables (Loads, Safety, Metrics) and Dimension tables (Drivers, Trucks, Routes).*
+*Architecture showing the refined relationship between Gold Layer Fact tables and Dimensions.*
 
 ---
 
-## 🎨 UI/UX Design Principles
-* **High-Contrast Dark Theme:** Developed for low-glare environments (Logistics Command Centers).
-* **Actionable Color Palette:** Standardized color coding (Red/Green) strictly reserved for performance variances.
-* **Dynamic Slicer Panel:** Global filtering synchronized across all report pages for a seamless analytical experience.
-
----
-
-## 🚀 Deployment
-1. Download the `.pbix` file included in this repository.
-2. Open in Power BI Desktop.
-3. Use the **Global Slicer Panel** to filter by Year (2023) and Month.
+## 🚀 Deployment & SQL Scripts
+1. **Database Setup:** Run the scripts in the `/SQL_Scripts` folder to build the Bronze, Silver, and Gold layers.
+2. **ETL Execution:** Run `EXEC silver.load_silver` to process and standardize raw data.
+3. **Power BI:** Open the `.pbix` file and refresh to see the modeled data in action.
 
 ---
 
 **Author:** Meenakshi Singh  
 **Role:** Aspiring Data Analyst | SQL & Power BI Specialist  
+
 
 
 
