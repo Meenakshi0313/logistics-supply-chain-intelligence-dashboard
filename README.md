@@ -33,29 +33,29 @@ This **End-to-End Business Intelligence Suite** transforms raw transactional log
 *Click on any image to view it in high resolution.*
 
 ### **01. Landing & Navigation Hub**
-[<img src="01_Home_Page.jpg" width="1000" alt="Home Page">](01_Home_Page.png)
+[<img src="Assets/01_Home_Page.jpg" width="1000" alt="Home Page">](Assets/01_Home_Page.png)
 > **Insight:** Features an intuitive navigation system with custom "Selected" states to guide users through four distinct operational domains.
 
 ### **02. Executive Financial Overview**
-[<img src="02_Executive_Financial_Overview.png" width="1000" alt="Financial Overview">](02_Executive_Financial_Overview.png)
+[<img src="Assets/02_Executive_Financial_Overview.png" width="1000" alt="Financial Overview">]Assets/(Assets/02_Executive_Financial_Overview.png)
 > **Insight:** Strategic view of margin protection. Includes a **Customer Profitability Scatter Plot** and "Accessorial Impact" tracking to monitor hidden costs.
 
 ### **03. Operational Efficiency & Assets**
-[<img src="03_Operational_Efficiency_and_Assets.png" width="1000" alt="Asset Analysis">](03_Operational_Efficiency_and_Assets.png)
+[<img src="Assets/03_Operational_Efficiency_and_Assets.png" width="1000" alt="Asset Analysis">](Assets/03_Operational_Efficiency_and_Assets.png)
 > **Insight:** Technical fleet management focusing on **MPG vs. Utilization correlation** and manufacturer-specific maintenance trends.
 
 ### **04. Driver Performance & Safety**
-[<img src="04_Driver_Performance_and_Safety.png" width="1000" alt="Safety Analysis">](04_Driver_Performance_and_Safety.png)
+[<img src="Assets/04_Driver_Performance_and_Safety.png" width="1000" alt="Safety Analysis">](Assets/04_Driver_Performance_and_Safety.png)
 > **Insight:** Now featuring enhanced **Experience Tier** (Rookie to Veteran) breakdowns. Includes a **Year-over-Year Safety Incident Distribution** chart.
 
 ### **05. Logistic & Facility Analysis**
-[<img src="05_Logistic_and_Facility_Analysis.png" width="1000" alt="Facility Analysis">](05_Logistic_and_Facility_Analysis.png)
+[<img src="Assets/05_Logistic_and_Facility_Analysis.png" width="1000" alt="Facility Analysis">](Assets/05_Logistic_and_Facility_Analysis.png)
 > **Insight:** Tactical view of hub throughput. Utilizes a **Diverging Bar Chart** to identify "High-Yield vs. High-Loss Lanes" and identifies facilities with high detention risk.
 
 ---
 
 ## 🏗️ Data Model (Star Schema)
-[<img src="Logistics_Star_Schema_Data_Model.png" width="1000" alt="Data Model">](Logistics_Star_Schema_Data_Model.png)
+[<img src="Assets/Logistics_Star_Schema_Data_Model.png" width="1000" alt="Data Model">](Assets/Logistics_Star_Schema_Data_Model.png)
 *Architecture showing the refined relationship between Gold Layer Fact tables and Dimensions.*
 
 ---
